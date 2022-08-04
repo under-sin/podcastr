@@ -1,5 +1,19 @@
-import { Header } from '../components/Header/index'
+export default function Home(props) {
+  return (
+    <>
+      <p>{JSON.stringify(props.episodes)}</p>
+    </>
+  )
+}
 
-export default function Home() {
-  return <Header />
+export async function getStaticProps() {
+  const res = await fetch('http://localhost:3333/episodes')
+  const data = await res.json()
+
+  return {
+    props: {
+      episodes: data
+    },
+    revalidate: 60 * 60 * 8
+  }
 }
